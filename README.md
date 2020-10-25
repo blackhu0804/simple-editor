@@ -57,34 +57,76 @@ bool = document.execCommand(aCommandName, aShowDefaultUI, aValueArgument)
   <div class="editor">
     <div>
       <button @click="handlerBold">加粗</button>
-      <button @click="handlerFont">修改字体</button>
-      <button @click="handlerColor">修改颜色</button>
-      <input type="text" placeholder="输入修改的颜色" v-model="color" />
+      <button @click="handlerFont('h1')">一级标题</button>
+      <button @click="handlerFont('h2')">二级标题</button>
+      <button @click="handlerFont('h3')">三级标题</button>
+      <input type="color" @change="handlerColor($event.target.value)" class="color-picker">
     </div>
-    <div class="editor-content" contenteditable="true"></div>
+    <div class="editor-content" contenteditable="true" 
+      @keydown.enter.prevent="preventEnter($event)"
+      @blur="saveRange"
+    ></div>
   </div>
 ```
 
 首先我们添加三个操作按钮，分别绑定对应的方法，分别去实现我们需要的功能。也就是通过我们上面提到过得`document.execCommand()`方法去实现。
 
 ```typescript
-private handlerBold(): void {
-  document.execCommand("bold");
-}
-
-private handlerFont(): void {
-  document.execCommand("formatBlock", false, "<h1>");
-}
-
-private handlerColor(): void {
-  if (!this.color) {
-    alert("请输入修改的颜色");
-    return;
+  private handlerBold(): void {
+    this.doCommand('bold', '');
   }
-  document.execCommand("ForeColor", false, this.color);
-}
+
+  private handlerFont(value: string): void {
+    this.doCommand('formatBlock', value);
+  }
+
+  private handlerColor(value: string): void {
+    this.doCommand('ForeColor', value);
+  }
+
+  private doCommand(command: string, value: string): void {
+    document.execCommand(command, false, value);
+  }
 ```
 
 三个对应的方法实现我们加粗、修改字体、修改颜色三个简单的富文本功能。
 
-以上，只算上对富文本编辑器的基本知识点进行了初步的梳理，后续还需要继续完善。
+## 进一步扩展
+
+此时如果在选中内容后，点击非编辑块内容区域，再去点击菜单，功能没有正常执行。因为`document.execCommand()`只对选中的内容进行操作，所以我们要对用户操作的内容选区进行保存，所以我们使用`selection.getRangeAt()`获得用户的选取，进行临时的存储。
+
+所以我们在编辑区域失焦的时候进行用户选区的保存操作：
+
+```typescript
+/**
+ * 保存选区
+ */
+private saveRange(): void {
+  const selection = document.getSelection() as Selection;
+  if (selection && selection.rangeCount === 0) {
+    return;
+  }
+  this.range = selection.getRangeAt(0);
+}
+
+/**
+ * 存储选区
+ */
+public restoreRange(): void {
+  const selection = document.getSelection() as Selection;
+  if (selection && this.range) {
+    selection.removeAllRanges();
+    selection.addRange(this.range);
+  }
+}
+```
+
+并且在进行菜单操作的时候，将存储的选区进行恢复，然后再对选区的内容进行操作，便实现了我们想要的内容：
+```typescript
+  private doCommand(command: string, value: string): void {
+    this.restoreRange();
+    document.execCommand(command, false, value);
+  }
+```
+
+这样的话，我们的一个简易的富文本编辑器就实现了！
