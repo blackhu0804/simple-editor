@@ -1,13 +1,6 @@
-class Greeter {
-  greeting: string;
-  constructor(message: string) {
-    this.greeting = message;
-  }
-  greet() {
-    return "Hello, " + this.greeting;
+class Editor {
+  private currentRange: Range | null | undefined;
+  constructor(editorSeletor: string) {
+    
   }
 }
-
-let greeter = new Greeter("world");
-
-alert(greeter.greet())
