@@ -1,23 +1,35 @@
 {
   "name": "simple-editor",
-  "version": "0.1.0",
+  "version": "1.0.0",
+  "description": "",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "start": "webpack --config webpack.config.js",
+    "dev": "webpack-dev-server --config webpack.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/blackhu0804/simple-editor.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/blackhu0804/simple-editor/issues"
+  },
+  "homepage": "https://github.com/blackhu0804/simple-editor#readme",
+  "devDependencies": {
+    "babel-loader": "^8.1.0",
+    "clean-webpack-plugin": "^3.0.0",
+    "css-loader": "^5.0.0",
+    "html-webpack-plugin": "^4.5.0",
+    "style-loader": "^2.0.0",
+    "ts-loader": "^8.0.7",
+    "typescript": "^4.0.3",
+    "webpack": "^4.2.0",
+    "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
-    "vue": "^2.6.11"
-  },
-  "devDependencies": {
-    "@vue/cli-plugin-typescript": "~4.5.0",
-    "@vue/cli-service": "~4.5.0",
-    "typescript": "~3.9.3",
-    "vue-template-compiler": "^2.6.11"
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not dead"
-  ]
+    "webpack-cli": "^3.3.12"
+  }
 }
