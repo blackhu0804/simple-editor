@@ -1,6 +1,8 @@
-declare class Greeter {
-    greeting: string;
-    constructor(message: string);
-    greet(): string;
+declare class Editor {
+    private currentRange;
+    private editorSeletor;
+    private $textContainerElem;
+    constructor(editorSeletor: string);
+    createEditorDom(): void;
+    appendEditorDom(): void;
 }
-declare let greeter: Greeter;

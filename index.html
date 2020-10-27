@@ -6,6 +6,14 @@
   <title>Document</title>
 </head>
 <body>
-  <script src="./dist/bundle.js"></script>
+  <div id="editor">
+    富文本编辑器
+  </div>
+
+  <script src="./src/index.ts"></script>
+  <script>
+    const E = window.wangEditor;
+    const editor = new E('#editor');
+  </script>
 </body>
 </html>
