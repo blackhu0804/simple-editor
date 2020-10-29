@@ -7,11 +7,16 @@ interface toolConfigItem {
 }
 
 class Editor {
+  // 保存用户选取
   private currentRange: Range | null | undefined;
+  // 传入的父容器
   private editorSeletor: string;
+  // 菜单DOM
   private $toolbarElem!: HTMLElement;
+  // 富文本编辑器DOM
   private $textContainerElem!: HTMLElement;
 
+  // 菜单项配置
   private config: toolConfigItem[] = [
     {
       name: '加粗',

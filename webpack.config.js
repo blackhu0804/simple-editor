@@ -2,13 +2,16 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
+  // 配置入口文件
   entry: './src/index.ts',
+  // 配置本地服务
   devServer: {
     contentBase: path.join(__dirname, "dist"),
     compress: true,
     port: 9000,
     hot: true
   },
+  // 引入loader
   module: {
     rules: [
       {
@@ -26,6 +29,7 @@ module.exports = {
       },
     ]
   },
+  // 引入plugin
   plugins: [
     new HtmlWebpackPlugin()
   ],
