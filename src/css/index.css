@@ -1,3 +1,6 @@
-body {
-  color: red;
+.my-editor {
+  margin: 0 auto;
+}
+.my-editor:focus {
+  outline: none;
 }

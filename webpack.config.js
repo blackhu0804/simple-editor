@@ -2,7 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: 'index.html',
+  entry: './src/index.ts',
   devServer: {
     contentBase: path.join(__dirname, "dist"),
     compress: true,
